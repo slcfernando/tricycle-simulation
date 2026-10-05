@@ -5,6 +5,7 @@ import requests
 import polyline
 from config import OSRM_URL
 from shapely.geometry import LineString, Point
+from urllib.parse import urljoin
 
 class NoRoute(Exception):
     pass
@@ -19,7 +20,8 @@ def find_nearest_point_in_osrm_path(x, y):
     Return value:
     (x_nearest, y_nearest)
     """
-    response = requests.get(f'{OSRM_URL}/nearest/v1/driving/{x},{y}')
+    url = urljoin(OSRM_URL + "/", f"nearest/v1/driving/{x},{y}")
+    response = requests.get(url)
     data = response.json()
     new_x = data['waypoints'][0]['location'][0]
     new_y = data['waypoints'][0]['location'][1]
@@ -48,7 +50,8 @@ def find_path_between_points_in_osrm(p1, p2):
     x1, y1 = find_nearest_point_in_osrm_path(x1, y1)
     x2, y2 = find_nearest_point_in_osrm_path(x2, y2)
     
-    response = requests.get(f'{OSRM_URL}/route/v1/driving/{x1},{y1};{x2},{y2}')
+    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1},{y1};{x2},{y2}")
+    response = requests.get(url)
     data = response.json()
     
     if data['code'] == "NoRoute":
@@ -80,7 +83,8 @@ def get_route_distance(p1, p2):
     x1, y1 = find_nearest_point_in_osrm_path(x1, y1)
     x2, y2 = find_nearest_point_in_osrm_path(x2, y2)
     
-    response = requests.get(f'{OSRM_URL}/route/v1/driving/{x1},{y1};{x2},{y2}')
+    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1},{y1};{x2},{y2}")
+    response = requests.get(url)
     data = response.json()
     
     if data['code'] == "NoRoute":
@@ -146,8 +150,9 @@ def is_en_route(p1, p2, p3):
     x2, y2 = find_nearest_point_in_osrm_path(x2, y2)
     x3, y3 = find_nearest_point_in_osrm_path(x3, y3)
 
+    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1},{y1};{x2},{y2}")
     response = requests.get(
-        f'{OSRM_URL}/route/v1/driving/{x1},{y1};{x2},{y2}',
+        url,
         params={"overview": "full", "geometries": "geojson"},
     )
     data = response.json()

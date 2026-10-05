@@ -110,6 +110,9 @@ function simulationTick() {
 
 // ===== Data Loading =====
 async function loadSimulationData(id, t, p) {
+    console.log(`Loading: ${id}, trikes: ${t}, passengers: ${p}`);
+    console.log("Target URL:", API_ENDPOINTS.simulation(id, t, p));
+
     const response = await fetch(API_ENDPOINTS.simulation(id, t, p));
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -222,7 +225,7 @@ function initializeUI() {
 
 // use the ID of the run you want to visualize
 // run ID, num trikes, num passengers
-// /show_real("3-2-20-mwmfnjlaeogv", 3, 20)
+show_real("3-4-122-t-ktvpzfamgmjn", 3, 122)
 
 // /3-2-20-omceyaycyqmn 3-2-20-mybbizldhghs
 // generator/data/real/3-2-20-yxjmsvodgtww
@@ -234,7 +237,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const id = DEFAULT_SIMULATION.id;
 
     // ✅ Get total passengers from metadata
+    console.log(`API_ENDPOINTS: ${API_ENDPOINTS.metadata(id)}`);
     const metadataResponse = await fetch(API_ENDPOINTS.metadata(id));
+    console.log(`metadataResponse: ${metadataResponse}`);
     const metadata = await metadataResponse.json();
 
     const totalPassengers = metadata.totalPassengers;

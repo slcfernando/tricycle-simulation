@@ -16,7 +16,8 @@ export const MAP_CONFIG = {
     center: [14.6436, 121.0572],
     zoom: 17,
     maxZoom: 19,
-    tileLayer: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    tileLayer: 'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=cb1_3xlr_1_8c967b9ccd409a74d847c87d',
+    // tileLayer: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
 };
 
@@ -29,10 +30,15 @@ export const API_ENDPOINTS = {
 };
 
 // Default simulation parameters
+// export const DEFAULT_SIMULATION = {
+//     id: "20-1-557-cyctulyjfvcw",
+//     trikes: 20,
+//     passengers: 213
+// };
 export const DEFAULT_SIMULATION = {
-    id: "20-1-557-cyctulyjfvcw",
-    trikes: 20,
-    passengers: 213
+    id: "3-4-122-t-ktvpzfamgmjn",
+    trikes: 3,
+    passengers: 122
 };
 
 // Utility functions

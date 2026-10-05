@@ -7,16 +7,21 @@ STARTUP GUIDE
 	cd osrm-backend
 	mkdir -p build
 	cd build
-	cmake .. -DCMAKE_CXX_FLAGS="-Wno-error=array-bounds"
+	
+	SIDNEY NOTE: Need to install vtzero and protozero separately through git clone
+	cmake .. \
+		-DCMAKE_CXX_FLAGS="-Wno-error=array-bounds" \
+		-DVTZERO_INCLUDE_DIR=../third_party/vtzero/include \
+		-DPROTOZERO_INCLUDE_DIR=../third_party/protozero/include
 	cmake --build .
 
 2. Move map to osrm-backend/maps/magin/map_magin.osm
 
 3. Set up OSRM
 
-	./osrm-extract -p ../profiles/car.lua ~/codebase/osrm-backend/maps/magin/map_magin.osm
-	./osrm-partition /home/c0debaberafa/codebase/osrm-backend/maps/magin/map_magin
-	./osrm-customize /home/c0debaberafa/codebase/osrm-backend/maps/magin/map_magin
+	./osrm-extract -p ../profiles/car.lua ../maps/magin/map_magin.osm
+	./osrm-partition ../maps/magin/map_magin.osm
+	./osrm-customize ../maps/magin/map_magin.osm
 
 
 
@@ -26,22 +31,31 @@ RUNNING / TESTING
 
 4. Running OSRM server
 
-	./osrm-routed --algorithm mld ../maps/magin/map_magin
+	cd osrm-backend/build
+	
+	SIDNEY NOTE: Changed port to 5001 because __main__.py in generator/ seems to expect it
+	./osrm-routed --algorithm mld ../maps/magin/map_magin.osm -p 5001
 
 5. Run simulation
 
-	python3 -m venv venv
+	cd generator
+	(only once) python3 -m venv venv
 	source venv/bin/activate
+	(only once) pip install -r requirements.txt
+		Need to install some other modules for some reason
 	python3 __main__.py
 
-
 6. Run visualization
+	Make the Flask SERVER part run
+	source venv/bin/activate
+	cd generator
+	flask --app server run --port=5053
 
-	(inside generator/, using venv)
-	flask --app server run --port=5050
-
-	(inside visualization/)
+	Make the WEBSITE run
+	cd visualization
 	serve .
+
+	*Need to check config.js in visualization/ and add your API key
 
 
 
