@@ -20,7 +20,7 @@ def find_nearest_point_in_osrm_path(x, y):
     Return value:
     (x_nearest, y_nearest)
     """
-    url = urljoin(OSRM_URL + "/", f"nearest/v1/driving/{x},{y}")
+    url = urljoin(OSRM_URL + "/", f"nearest/v1/driving/{x:.10f},{y:.10f}")
     response = requests.get(url)
     data = response.json()
     new_x = data['waypoints'][0]['location'][0]
@@ -50,7 +50,7 @@ def find_path_between_points_in_osrm(p1, p2):
     x1, y1 = find_nearest_point_in_osrm_path(x1, y1)
     x2, y2 = find_nearest_point_in_osrm_path(x2, y2)
     
-    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1},{y1};{x2},{y2}")
+    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1:.10f},{y1:.10f};{x2:.10f},{y2:.10f}")
     response = requests.get(url)
     data = response.json()
     
@@ -83,7 +83,7 @@ def get_route_distance(p1, p2):
     x1, y1 = find_nearest_point_in_osrm_path(x1, y1)
     x2, y2 = find_nearest_point_in_osrm_path(x2, y2)
     
-    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1},{y1};{x2},{y2}")
+    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1:.10f},{y1:.10f};{x2:.10f},{y2:.10f}")
     response = requests.get(url)
     data = response.json()
     
@@ -150,7 +150,7 @@ def is_en_route(p1, p2, p3):
     x2, y2 = find_nearest_point_in_osrm_path(x2, y2)
     x3, y3 = find_nearest_point_in_osrm_path(x3, y3)
 
-    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1},{y1};{x2},{y2}")
+    url = urljoin(OSRM_URL + "/", f"route/v1/driving/{x1:.10f},{y1:.10f};{x2:.10f},{y2:.10f}")
     response = requests.get(
         url,
         params={"overview": "full", "geometries": "geojson"},
