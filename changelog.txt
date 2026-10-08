@@ -1,6 +1,12 @@
 STARTUP GUIDE
 =============
 
+Assumed ports for later on:
+5001 - OSRM
+5053 - Flask
+3000 - serve
+
+
 1. OSRM setup
 
 	git clone https://github.com/Project-OSRM/osrm-backend.git
@@ -56,6 +62,57 @@ RUNNING / TESTING
 	serve .
 
 	*Need to check config.js in visualization/ and add your API key
+	Modify map.js to add which simulation to show
+
+
+SIDNEY: How to install it on MacBook.
+1. Install Docker if not yet present.
+2. `brew install uv node` for additional tools.
+3. `mkdir osrm-backend/maps/magin`
+4. Extract, partition, and customize
+
+```
+docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
+  osrm-extract -p /opt/car.lua /data/map_magin.osm
+docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
+  osrm-partition /data/map_magin.osrm
+docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
+  osrm-customize /data/map_magin.osrm
+```
+
+5. Start OSRM server
+
+```
+docker run --rm -t -i -p 5001:5000 -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
+  osrm-routed --algorithm mld /data/map_magin.osrm
+```
+
+6. Setup virtual environment and download packages
+I think we can create the venv in the root folder instead?
+
+```
+cd generator
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+```
+
+7. Run simulation to get JSON data
+(In generator/ folder)
+`python __main__.py`
+
+8. Run Flask for server
+```
+cd generator
+source .venv/bin/activate
+flask --app server run --port=5053
+```
+
+9. Run visualization
+```
+cd visualization
+npx serve .
+```
 
 
 
