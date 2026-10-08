@@ -67,23 +67,21 @@ RUNNING / TESTING
 SIDNEY: How to install it on MacBook.
 1. Install Docker if not yet present. Docker is helpful to isolate packages and such from each other.
 2. `brew install uv node` for additional tools.
-3. `mkdir osrm-backend/maps/magin`
+3. `mkdir -p osrm-backend/maps/magin` then `cd` to that folder
 4. Extract, partition, and customize
 
 ```
-docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
-  osrm-extract -p /opt/car.lua /data/map_magin.osm
-docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
-  osrm-partition /data/map_magin.osrm
-docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
-  osrm-customize /data/map_magin.osrm
+docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend osrm-extract -p /opt/car.lua /data/map_magin.osm
+
+docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend osrm-partition /data/map_magin.osrm
+
+docker run --rm -t -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend osrm-customize /data/map_magin.osrm
 ```
 
 5. Start OSRM server
 
 ```
-docker run --rm -t -i -p 5001:5000 -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend \
-  osrm-routed --algorithm mld /data/map_magin.osrm
+docker run --rm -t -i -p 5001:5000 -v "$(pwd):/data" ghcr.io/project-osrm/osrm-backend osrm-routed --algorithm mld /data/map_magin.osrm
 ```
 
 6. Setup virtual environment and download packages
