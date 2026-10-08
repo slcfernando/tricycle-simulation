@@ -48,7 +48,6 @@ RUNNING / TESTING
 	(only once) python3 -m venv venv
 	source venv/bin/activate
 	(only once) pip install -r requirements.txt
-		Need to install some other modules for some reason
 	python3 __main__.py
 
 6. Run visualization
@@ -66,7 +65,7 @@ RUNNING / TESTING
 
 
 SIDNEY: How to install it on MacBook.
-1. Install Docker if not yet present.
+1. Install Docker if not yet present. Docker is helpful to isolate packages and such from each other.
 2. `brew install uv node` for additional tools.
 3. `mkdir osrm-backend/maps/magin`
 4. Extract, partition, and customize
