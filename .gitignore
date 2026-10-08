@@ -29,3 +29,4 @@ maps/
 
 # Virtual Environment
 .venv/
+venv/
