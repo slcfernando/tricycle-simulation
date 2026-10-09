@@ -25,12 +25,17 @@ node_dict = None
 
 def build_graph(tolerance = 0.001):
     global map_graph, node_dict
-    map_graph = ox.graph_from_bbox((
-        TOP_LEFT_MAGIN[1]-tolerance,
-        BOT_RIGHT_MAGIN[0]-tolerance,
-        BOT_RIGHT_MAGIN[1]+tolerance,
-        TOP_LEFT_MAGIN[0]+tolerance),
-        network_type='drive'
+    # map_graph = ox.graph_from_bbox((
+    #     TOP_LEFT_MAGIN[1]-tolerance,
+    #     BOT_RIGHT_MAGIN[0]-tolerance,
+    #     BOT_RIGHT_MAGIN[1]+tolerance,
+    #     TOP_LEFT_MAGIN[0]+tolerance),
+    #     network_type='drive'
+    # )
+    # SIDNEY NOTE: Modified for now
+    map_graph = ox.graph_from_xml(
+        "../osrm-backend/maps/grid/grid.osm",
+        simplify=False,
     )
     map_graph.remove_nodes_from([8371178547, 4348132724, 306542749, 22352553, 5464354432, 12094057286, 30763515, 12094057284, 30763517, 12074492396, 32476305, 6505208683, 245864655, 1141494120, 7696100547, 7696100558, 1233506780, 32476255, 8314082976, 30763516, 1233506757])
     node_dict = map_graph.nodes()
