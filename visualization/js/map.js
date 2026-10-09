@@ -22,13 +22,16 @@ import { eventProcessor } from './event_processor.js';
 // ===== Map Initialization =====
 export function initializeMap() {
     console.log('Initializing map...');
-    const map = L.map('map').setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
+    // SIDNEY: Changed to 0, 0 for the grid
+    // const map = L.map('map').setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
+    const map = L.map('map').setView([0, 0], MAP_CONFIG.zoom);
 
+    // SIDNEY: Avoid for now to ignore real world map
     // Use CartoDB dark theme
-    L.tileLayer(MAP_CONFIG.tileLayer, {
-        maxZoom: MAP_CONFIG.maxZoom,
-        attribution: MAP_CONFIG.attribution
-    }).addTo(map);
+    // L.tileLayer(MAP_CONFIG.tileLayer, {
+    //     maxZoom: MAP_CONFIG.maxZoom,
+    //     attribution: MAP_CONFIG.attribution
+    // }).addTo(map);
 
     // Make map available globally
     window.map = map;
@@ -222,13 +225,6 @@ function initializeUI() {
         });
     });
 }
-
-// use the ID of the run you want to visualize
-// run ID, num trikes, num passengers
-show_real("3-4-122-t-ktvpzfamgmjn", 3, 122)
-
-// /3-2-20-omceyaycyqmn 3-2-20-mybbizldhghs
-// generator/data/real/3-2-20-yxjmsvodgtww
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {

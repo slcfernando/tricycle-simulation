@@ -29,16 +29,11 @@ export const API_ENDPOINTS = {
     summary: (id) => `http://localhost:5053/real/${id}/summary.json`
 };
 
-// Default simulation parameters
-// export const DEFAULT_SIMULATION = {
-//     id: "20-1-557-cyctulyjfvcw",
-//     trikes: 20,
-//     passengers: 213
-// };
+// Default simulation parameters. Modify this to the simulation you want to depict.
 export const DEFAULT_SIMULATION = {
-    id: "3-4-122-t-ktvpzfamgmjn",
+    id: "3-4-141-t-ofboaqzyqapm",
     trikes: 3,
-    passengers: 122
+    passengers: 141,
 };
 
 // Utility functions
